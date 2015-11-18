@@ -6,6 +6,16 @@
   width: 100%;
   margin-bottom: 20px;
 }
+
+.fupper.flubber {
+    background: #3594cb;
+}
+
+.fupper.flubber .xe-upper {
+    background: #2c2e2f;
+    font-size: 40;
+}
+
 .ps-container .ps-scrollbar-x-rail {
   position: absolute;
   /* please don't change 'position' */
