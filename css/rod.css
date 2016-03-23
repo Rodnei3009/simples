@@ -2,8 +2,8 @@
     position: relative;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 .divrounded {
     background-color: #fff;
@@ -17,9 +17,9 @@
     text-align: left;
     width: 100%;
     height: 100%;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: normal;
-    padding-left: 30px;
+    padding-left: 15px;
 }
 .divpos.divcateg {
     background-color: #fff;    
@@ -27,9 +27,9 @@
     text-align: left;
     width: 100%;
     height: 100%;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: normal;
-    padding-left: 45px;
+    padding-left: 25px;
 }
 .blocoesq {
     position: absolute;
@@ -43,7 +43,7 @@
 }
 .blocodir {
     position: absolute;
-    top: 30px;
+    top: 10px;
     right: 30px;
     background-color: #fff;    
     display: block;
