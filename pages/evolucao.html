@@ -1,4 +1,4 @@
-<div class="divbody">
+<div class="divbody" ng-controller="listprod">
     
     <br>
     <br>
@@ -18,7 +18,19 @@
         </div>
     </div>    
     
-    <div ng-hide="carregou" ng-controller="listprod">
+    <br>
+    <br>
+        
+    <div class="divselec">
+        <select id="soflow">
+          <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers. -->
+          <option>Categoria</option>
+          <option>Alimentação</option>
+          <option>Produtos de Limpeza</option>
+        </select>
+    </div>
+    
+    <div ng-hide="carregou" >
 
         <br>
         
@@ -33,7 +45,7 @@
                 </div>
 
                 <div class="blocodir">
-                    <input type="checkbox" name="checkboxG1" id="checkboxG1" class="css-checkbox" /><label for="checkboxG1" class="css-label"></label>
+                    <input type="checkbox" name={{produto.prodID}} id={{produto.prodID}} class="css-checkbox" /><label for={{produto.prodID}} class="css-label"></label>
                 </div>
             </div>
             

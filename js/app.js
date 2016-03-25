@@ -33,23 +33,19 @@ animateApp.config(function($routeProvider) {
 
 
 animateApp.controller('listprod', function($scope) {
-        
     $scope.produtos = [];
+    $scope.carregou = true;
 
     myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
     myData.once('value', function(snapshot){
         if (snapshot.exists()) {
-
-            alert(snapshot.numChildren());
             snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
-
-                $scope.produtos.push({descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val()}); 
+                
+                $scope.produtos.push({prodID: childSnapshotProdutos.key(), descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val()}); 
                 
             });
-
-            $scope.$apply();
             $scope.carregou = false;
-
+            $scope.$apply();
         } else {
             $scope.carregou = false;
         }            
@@ -57,6 +53,16 @@ animateApp.controller('listprod', function($scope) {
 
 });
 
+animateApp.controller('listCateg', function($scope) {
+    $scope.data = {
+     availableOptions: [
+       {id: '1', name: 'Option A'},
+       {id: '2', name: 'Option B'},
+       {id: '3', name: 'Option C'}
+     ],
+     selectedOption: {id: '3', name: 'Option C'} //This sets the default value of the select in the ui
+     };
+ });
 
 animateApp.controller('mainController', function($scope) {
     $scope.pageClass = 'page-home';
