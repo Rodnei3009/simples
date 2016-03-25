@@ -72,8 +72,8 @@ animateApp.controller('listprod', function($scope) {
         $scope.myData.child('status').set(!statusItem); /*! para negar o que vem da tela*/
     };
     
-    $scope.categorias = ['Alimentação', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
-    $scope.data.singleSelect = 'Alimentação';
+    $scope.categorias = ['Alimentos', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
+    $scope.data.singleSelect = 'Alimentos';
     $scope.carregou = false;
     $scope.$apply();
     
@@ -130,9 +130,7 @@ animateApp.controller('minhalistaCTRL', ['$scope', function($scope) {
         $scope.myData = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prodID);
         $scope.myData.child('status').set(statusItem);
     };
-
-    //$scope.categorias = ['Alimentação', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
-    //$scope.data.singleSelect = 'Alimentação';
+    
 }]);
 
 
