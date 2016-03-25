@@ -41,7 +41,7 @@ animateApp.controller('listprod', function($scope) {
     $scope.carregou = true;
 
     myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
-    myData.on('value', function(snapshot){
+    myData.once('value', function(snapshot){
         if (snapshot.exists()) {
             snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
                 
@@ -67,9 +67,9 @@ animateApp.controller('listprod', function($scope) {
         }
     };
     
-    $scope.inserirLista = function(prodID, prodDesc, prodCateg, statusItem) {                    
+    $scope.inserirLista = function(prodID, prodDesc, prodCateg, statusItem) {                            
         $scope.myData = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prodID);
-        $scope.myData.child('status').set(statusItem);
+        $scope.myData.child('status').set(!statusItem); /*! para negar o que vem da tela*/
     };
     
     $scope.categorias = ['Alimentação', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
