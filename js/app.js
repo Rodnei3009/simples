@@ -31,6 +31,33 @@ animateApp.config(function($routeProvider) {
     
 });
 
+
+animateApp.controller('listprod', function($scope) {
+        
+    $scope.produtos = [];
+
+    myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
+    myData.once('value', function(snapshot){
+        if (snapshot.exists()) {
+
+            alert(snapshot.numChildren());
+            snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
+
+                $scope.produtos.push({descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val()}); 
+                
+            });
+
+            $scope.$apply();
+            $scope.carregou = false;
+
+        } else {
+            $scope.carregou = false;
+        }            
+    });
+
+});
+
+
 animateApp.controller('mainController', function($scope) {
     $scope.pageClass = 'page-home';
 });

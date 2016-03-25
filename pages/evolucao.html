@@ -18,18 +18,18 @@
         </div>
     </div>    
     
-    <div ng-hide="carregou">
+    <div ng-hide="carregou" ng-controller="listprod">
 
         <br>
         
-        <div class="divpos">
+        <div class="divpos" ng-repeat="produto in produtos">
             <div class="divrounded">
                 <div class="divpos divformatter">
-                    <spam class="num">Arroz</spam>
+                    <spam class="num">{{produto.descricao}}</spam>
                 </div>
 
                 <div class="divpos divcateg">
-                    <span>Alimentação</span>
+                    <span>{{produto.categoria}}</span>
                 </div>
 
                 <div class="blocodir">
