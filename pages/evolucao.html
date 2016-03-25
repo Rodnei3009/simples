@@ -19,21 +19,18 @@
     </div>    
     
     <br>
-    <br>
-        
-    <div class="divselec">
-        <select id="soflow">
-          <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers. -->
-          <option>Categoria</option>
-          <option>Alimentação</option>
-          <option>Produtos de Limpeza</option>
-        </select>
-    </div>
     
     <div ng-hide="carregou" >
 
-        <br>
-        
+        <div class="divselec">
+            <select id="soflow">
+              <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers. -->
+              <option>Categoria</option>
+              <option>Alimentação</option>
+              <option>Produtos de Limpeza</option>
+            </select>
+        </div>
+                
         <div class="divpos" ng-repeat="produto in produtos">
             <div class="divrounded">
                 <div class="divpos divformatter">
