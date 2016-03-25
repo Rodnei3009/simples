@@ -34,35 +34,108 @@ animateApp.config(function($routeProvider) {
 
 animateApp.controller('listprod', function($scope) {
     $scope.produtos = [];
+    $scope.categorias=[];
+    $scope.data = {};
+    $scope.data.novoProduto = "";
+    $scope.statusItem;
     $scope.carregou = true;
 
     myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
-    myData.once('value', function(snapshot){
+    myData.on('value', function(snapshot){
         if (snapshot.exists()) {
             snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
                 
-                $scope.produtos.push({prodID: childSnapshotProdutos.key(), descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val()}); 
+                $scope.produtos.push({prodID: childSnapshotProdutos.key(), descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val(), 'status': childSnapshotProdutos.child('status').val()}); 
                 
             });
             $scope.carregou = false;
-            $scope.$apply();
         } else {
             $scope.carregou = false;
         }            
     });
-
+    
+    $scope.saveProdutos = function(desc, categ){
+        if ($scope.data.novoProduto == "") {
+            //alert('sim');
+            $scope.myValue=true;
+            return false;
+        } else {
+            //alert('nao');
+            myData.push({descricao:$scope.data.novoProduto, categoria:$scope.data.singleSelect});
+            $scope.data.novoProduto = "";
+            $scope.myValue=false;
+        }
+    };
+    
+    $scope.inserirLista = function(prodID, prodDesc, prodCateg, statusItem) {                    
+        $scope.myData = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prodID);
+        $scope.myData.child('status').set(statusItem);
+    };
+    
+    $scope.categorias = ['Alimentação', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
+    $scope.data.singleSelect = 'Alimentação';
+    $scope.carregou = false;
+    $scope.$apply();
+    
 });
 
-animateApp.controller('listCateg', function($scope) {
-    $scope.data = {
-     availableOptions: [
-       {id: '1', name: 'Option A'},
-       {id: '2', name: 'Option B'},
-       {id: '3', name: 'Option C'}
-     ],
-     selectedOption: {id: '3', name: 'Option C'} //This sets the default value of the select in the ui
-     };
- });
+
+animateApp.controller('minhalistaCTRL', ['$scope', function($scope) {
+    $scope.descricao="";
+    $scope.produtos={};
+    $scope.categorias=[];
+    $scope.data = {};
+    $scope.statusItem;
+    $scope.carregou = false;
+
+    myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
+    myData.on('value', function(snapshot){
+        $scope.produtos = [];
+        snapshot.forEach(function(childSnapshot) {
+            $scope.produtos.push({'ID': childSnapshot.key(), 'descricao': childSnapshot.child('descricao').val(), 'categoria': childSnapshot.child('categoria').val(), 'status': childSnapshot.child('status').val()});
+        });
+        $scope.carregou = true;
+        $scope.$apply();                    
+    });
+
+    $scope.toggle = function() {
+        $scope.boxClass = !$scope.boxClass;
+    };
+
+    $scope.removeItem = function removeItem(prod) {
+        //alert(prod);
+        $scope.deleteitem = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prod);
+        $scope.deleteitem.remove();
+        $scope.$apply();
+        $scope.myValue=false;
+    };
+
+    $scope.saveProdutos = function(desc, categ){
+        //alert($scope.data.novoProduto + " - " + $scope.data.singleSelect);
+
+        if ($scope.data.novoProduto == "") {
+            //alert('sim');
+            $scope.myValue=true;
+            return false;
+        } else {
+            //alert('nao');
+            myData.push({descricao:$scope.data.novoProduto, categoria:$scope.data.singleSelect});
+            $scope.data.novoProduto = "";
+            $scope.myValue=false;
+        }
+    };
+
+    $scope.inserirLista = function(prodID, prodDesc, prodCateg, statusItem) {                    
+        //alert(prodID + prodDesc + prodCateg + statusItem);
+        $scope.myData = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prodID);
+        $scope.myData.child('status').set(statusItem);
+    };
+
+    //$scope.categorias = ['Alimentação', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
+    //$scope.data.singleSelect = 'Alimentação';
+}]);
+
+
 
 animateApp.controller('mainController', function($scope) {
     $scope.pageClass = 'page-home';

@@ -22,16 +22,24 @@
     
     <div ng-hide="carregou" >
 
+        <!--
         <div class="divselec">
             <select id="soflow">
-              <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers. -->
+              <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers.
               <option>Categoria</option>
               <option>Alimentação</option>
               <option>Produtos de Limpeza</option>
             </select>
         </div>
-                
-        <div class="divpos" ng-repeat="produto in produtos">
+        -->
+        
+        <div class="divselec">
+            <div>									
+                <select id="prodCategorias" class="form-control" placeholder="Search Categoria" ng-model="data.singleSelect" ng-options="categoria for categoria in categorias"></select>
+            </div>
+        </div>    
+        
+        <div class="divpos" ng-repeat="produto in produtos | filter:data.singleSelect">
             <div class="divrounded">
                 <div class="divpos divformatter">
                     <spam class="num">{{produto.descricao}}</spam>
@@ -42,24 +50,7 @@
                 </div>
 
                 <div class="blocodir">
-                    <input type="checkbox" name={{produto.prodID}} id={{produto.prodID}} class="css-checkbox" /><label for={{produto.prodID}} class="css-label"></label>
-                </div>
-            </div>
-            
-        </div>
-                
-        <div class="divpos">
-            <div class="divrounded">
-                <div class="divpos divformatter">
-                    <spam class="num">Arroz</spam>
-                </div>
-
-                <div class="divpos divcateg">
-                    <span>Alimentação</span>
-                </div>
-
-                <div class="blocodir">
-
+                    <input type="checkbox" name={{produto.prodID}} id={{produto.prodID}} class="css-checkbox" ng-model="produto.status" ng-click="inserirLista(produto.prodID, produto.descricao, produto.categoria, produto.status)" /><label for={{produto.prodID}} class="css-label"></label>
                 </div>
             </div>
             
@@ -67,23 +58,33 @@
         
         <br>
         
-        <div class="col-sm-12">
-            <div class="xe-widget xe-counter-block" >
-                <div class="xe-upper">
-                    <div class="xe-icon">
-                        <div class="checkbox checkbox-primary">
-                            <input id="checkbox" type="checkbox" checked>
-                        </div>
-                    </div>
-                    <div class="xe-label">
-                        <strong class="num">99%</strong>
-                        <span>SLA no prazo</span>
-                    </div>
+        <div class="divselec">
+        
+            <div class="input-group">
+                <input type="text" ng-model="data.novoProduto" class="form-control no-right-border form-focus-purple">
 
-                </div>
+                <span class="input-group-btn">
+                    <button class="btn btn-purple" type="button" ng-click="saveProdutos(txtIncluir, data.singleSelect)">Incluir</button>
+                </span>
             </div>
-        </div>
 
+            <br>
+
+            <div>
+                <form role="form">						
+                    <div class="bs-example" ng-show="myValue">
+
+                            <div class="alert alert-warning">
+                                <strong>Alerta!</strong> Preencha o nome do produto...
+                            </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>    
+        
+        <br>
         
         <div>
             <br>
