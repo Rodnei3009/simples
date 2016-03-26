@@ -22,6 +22,10 @@ animateApp.config(function($routeProvider) {
             templateUrl: 'pages/evolucao.html',
             controller: 'evolucaoController'
         })
+        .when('/compras', {
+            templateUrl: 'pages/compras.html',
+            controller: 'comprasController'
+        })
         .when('/monthly', {
             templateUrl: 'pages/monthly.html',
             controller: 'monthlyController'
@@ -42,6 +46,7 @@ animateApp.controller('listprod', function($scope) {
 
     myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
     myData.once('value', function(snapshot){
+                
         if (snapshot.exists()) {
             snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
                 
@@ -49,6 +54,7 @@ animateApp.controller('listprod', function($scope) {
                 
             });
             $scope.carregou = false;
+            $scope.$apply();
         } else {
             $scope.carregou = false;
         }            
@@ -74,66 +80,47 @@ animateApp.controller('listprod', function($scope) {
     
     $scope.categorias = ['Alimentos', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
     $scope.data.singleSelect = 'Alimentos';
-    $scope.carregou = false;
+    //$scope.carregou = false;
     $scope.$apply();
     
 });
 
 
-animateApp.controller('minhalistaCTRL', ['$scope', function($scope) {
-    $scope.descricao="";
-    $scope.produtos={};
+animateApp.controller('comprasCTRL', ['$scope', function($scope) {
+    $scope.produtos = [];
     $scope.categorias=[];
     $scope.data = {};
+    $scope.data.novoProduto = "";
     $scope.statusItem;
-    $scope.carregou = false;
+    $scope.carregou = true;
 
     myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
-    myData.on('value', function(snapshot){
-        $scope.produtos = [];
-        snapshot.forEach(function(childSnapshot) {
-            $scope.produtos.push({'ID': childSnapshot.key(), 'descricao': childSnapshot.child('descricao').val(), 'categoria': childSnapshot.child('categoria').val(), 'status': childSnapshot.child('status').val()});
-        });
-        $scope.carregou = true;
-        $scope.$apply();                    
-    });
-
-    $scope.toggle = function() {
-        $scope.boxClass = !$scope.boxClass;
-    };
-
-    $scope.removeItem = function removeItem(prod) {
-        //alert(prod);
-        $scope.deleteitem = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prod);
-        $scope.deleteitem.remove();
-        $scope.$apply();
-        $scope.myValue=false;
-    };
-
-    $scope.saveProdutos = function(desc, categ){
-        //alert($scope.data.novoProduto + " - " + $scope.data.singleSelect);
-
-        if ($scope.data.novoProduto == "") {
-            //alert('sim');
-            $scope.myValue=true;
-            return false;
+    myData.orderByChild("status").equalTo(true).once('value', function(snapshot){
+        
+        if (snapshot.exists()) {
+            snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
+                
+                $scope.produtos.push({prodID: childSnapshotProdutos.key(), descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val(), 'status': childSnapshotProdutos.child('status').val()}); 
+                
+            });
+            $scope.carregou = false;
+            $scope.$apply();
         } else {
-            //alert('nao');
-            myData.push({descricao:$scope.data.novoProduto, categoria:$scope.data.singleSelect});
-            $scope.data.novoProduto = "";
-            $scope.myValue=false;
-        }
-    };
-
-    $scope.inserirLista = function(prodID, prodDesc, prodCateg, statusItem) {                    
-        //alert(prodID + prodDesc + prodCateg + statusItem);
-        $scope.myData = new Firebase("https://listadecompras.firebaseio.com/produtos/" + prodID);
-        $scope.myData.child('status').set(statusItem);
-    };
+            $scope.carregou = false;
+        }            
+    });
     
+    $scope.categorias = ['Alimentos', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
+    $scope.data.singleSelect = 'Alimentos';
+    //$scope.carregou = false;
+    $scope.$apply();
+       
 }]);
 
 
+animateApp.controller('comprasController', function($scope) {
+    $scope.pageClass = 'page-compras';
+});
 
 animateApp.controller('mainController', function($scope) {
     $scope.pageClass = 'page-home';
