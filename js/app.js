@@ -93,14 +93,17 @@ animateApp.controller('comprasCTRL', ['$scope', function($scope) {
     $scope.data.novoProduto = "";
     $scope.statusItem;
     $scope.carregou = true;
+    
+    $scope.contSelec = 0;
+    $scope.contTotal = 0;
 
     myData = new Firebase("https://listadecompras.firebaseio.com/produtos");
-    myData.orderByChild("status").equalTo(true).once('value', function(snapshot){
+    myData.orderByChild("status").equalTo(true).on('value', function(snapshot){
         
         if (snapshot.exists()) {
             snapshot.forEach(function(childSnapshotProdutos) { //para cada produto
                 
-                $scope.produtos.push({prodID: childSnapshotProdutos.key(), descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val(), 'status': childSnapshotProdutos.child('status').val()}); 
+                $scope.produtos.push({prodID: childSnapshotProdutos.key(), descricao: childSnapshotProdutos.child('descricao').val(), categoria: childSnapshotProdutos.child('categoria').val(), 'status': false, preco: '', qtd: '' }); 
                 
             });
             $scope.carregou = false;
@@ -109,6 +112,33 @@ animateApp.controller('comprasCTRL', ['$scope', function($scope) {
             $scope.carregou = false;
         }            
     });
+    
+    $scope.saveCompras = function(prdID){
+        
+        for(i=1;i<=$scope.produtos.length;i++) {
+            
+            if($scope.produtos[i].prodID === prdID) {
+            
+                $scope.produtos[i].status = !$scope.produtos[i].status;
+            }
+        }    
+        $scope.atualizaCont();
+    };
+    
+    $scope.atualizaCont = function(){
+        
+        for(i=1;i<=$scope.produtos.length;i++) {
+            
+            if($scope.produtos[i].status === true) {
+            
+                $scope.contSelec = $scope.contSelec + 1;
+            }
+            
+        }
+        
+        $scope.contTotal = $scope.produtos.length;
+        
+    };
     
     $scope.categorias = ['Alimentos', 'Bebidas', 'Produtos de Limpeza', 'Carnes e Frios', 'Hortifruti'];
     $scope.data.singleSelect = 'Alimentos';

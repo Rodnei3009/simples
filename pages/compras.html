@@ -22,17 +22,6 @@
     
     <div ng-hide="carregou" >
 
-        <!--
-        <div class="divselec">
-            <select id="soflow">
-              <!-- This method is nice because it doesn't require extra div tags, but it also doesn't retain the style across all browsers.
-              <option>Categoria</option>
-              <option>Alimentação</option>
-              <option>Produtos de Limpeza</option>
-            </select>
-        </div>
-        -->
-        
         <div class="divselec">
             <div>									
                 <select id="prodCategorias" class="form-control" placeholder="Search Categoria" ng-model="data.singleSelect" ng-options="categoria for categoria in categorias"></select>
@@ -48,13 +37,26 @@
                 <div class="divpos divcateg">
                     <span>{{produto.categoria}}</span>
                 </div>
-
+                
                 <div class="blocodir">
-                    <input type="checkbox" name={{produto.prodID}} id={{produto.prodID}} class="css-checkbox" ng-model="produto.status" ng-click="inserirLista(produto.prodID, produto.descricao, produto.categoria, produto.status)" /><label for={{produto.prodID}} class="css-label"></label>
+                    <input type="checkbox" name={{produto.prodID}} id={{produto.prodID}} class="css-checkbox" ng-click="saveCompras(produto.prodID)" /><label for={{produto.prodID}} class="css-label"></label>
                 </div>
             </div>
             
         </div>  
+        
+        <br>
+        
+        <div class="divselec">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                {{contSelec}}
+              </div>
+            </div>
+            
+            <a class="btn btn-block btn-lg btn-primary" ng-click="saveCompras()"><span class="glyphicon glyphicon-check"></span> Finalizar compra</a>
+            
+        </div>
         
         <br>
         
