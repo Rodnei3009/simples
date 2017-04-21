@@ -79,24 +79,21 @@
         <div class="form-group">
           <label>Categoria</label>
           
-          <!--    
-          <select class="form-control" placeholder="Search categoria" ng-options="categoria as categoria.label for categoria in categorias track by categoria.id" ng-model="selected"></select>           
-          -->
-            
-            
           <select id="prodCategorias" class="form-control" placeholder="Search categoria" ng-model="selected" ng-options="categoria.label for categoria in categorias"></select>    
-             
-            
-        </div>   
-                  
+        </div>    
+        
+          
         <li ng-repeat="produto in produtos | filter: {categ: selected.id}">
+          
+          <input type="checkbox" id="{{produto.id}}">
+          <input type="checkbox" ng-model="produto.label">    
           <span class="text">{{produto.label}}</span>
           <!-- General tools such as edit or delete-->
           <div class="tools">
             <i class="fa fa-trash-o"></i>
           </div>
         </li>
-         
+          
       </ul>
       
       <br>    
