@@ -322,6 +322,8 @@ border:0px solid black;
 }
 .navbar-header {
     background: #202020;
+    border:0px solid black;
+    
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
 background-color: #B40101;
