@@ -21,6 +21,20 @@
     <script type="text/javascript" src="js/jQuery/jQuery-2.1.3.min.js"></script>
     <script type="text/javascript" src="js/sparkline/jquery.sparkline.js"></script>
     
+    <style>
+      /* Icon when the collapsible content is shown */
+      .chev:after {
+        font-family: "Glyphicons Halflings";
+        content: "\e114";
+        
+        margin-left: 15px;
+      }
+      /* Icon when the collapsible content is hidden */
+      .chev.collapsed:after {
+        content: "\e080";
+      }
+    </style>
+    
 </head>
 <body>
     <div id="wrapper">
@@ -161,8 +175,9 @@
                         </tr>
                     </thead>
                     <tbody class="table-section active">
-                        <tr data-toggle="collapse" data-target="#accordion4" class="clickable">
-                            <td>MG</td>
+                        <tr>
+                        <!--<tr data-target="#accordion4" class="clickable">-->
+                            <td><span class="chev collapsed" data-toggle="collapse" data-target="#accordion4"></span></td>
                             <td>F. Nova Minas</td>
                             <td><div class="btn btn-success btn-xs">N</div></td>
                             <td><span id="normalline">8,4,0,0,0,0,1,4,4,4,9,7,7,2,4,2,4,6,5,1,10</span></td>
