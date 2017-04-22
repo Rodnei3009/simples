@@ -21,6 +21,9 @@
     <script type="text/javascript" src="js/jQuery/jQuery-2.1.3.min.js"></script>
     <script type="text/javascript" src="js/sparkline/jquery.sparkline.js"></script>
     
+    <script src="js/angular.min.js"></script>
+    <script src="js/dash.js"></script>
+    
     <style>
       /* Icon when the collapsible content is shown */
       .chev:after {
@@ -36,7 +39,7 @@
     </style>
     
 </head>
-<body>
+<body ng-app="myApp">
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -117,7 +120,7 @@
             
         </nav>  
         <!-- /. NAV SIDE  -->
-        <div id="page-wrapper" >
+        <div id="page-wrapper">
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
@@ -127,37 +130,54 @@
                 </div>              
                  
                 <hr />                
-                
-                
-                
-                <!--
-                <table class="table table-hover">
-                    <thead>
-                        <th></th><th></th><th></th>
-                    </thead>
-
-                    <tbody>
-                        <tr data-toggle="collapse" data-target="#accordion" class="clickable">
-                            <td>Some Stuff</td>
-                            <td>Some more stuff</td>
-                            <td>And some more</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td colspan="3">
-                                <div id="accordion" class="collapse">
-                                    <div>asasdsd</div>
-                                    <div>asasdsd</div>
-                                    <div>dfsdfsdfsdfa</div>
-                                    <div>aasdsadfsdfsadfsadfasd</div>
-                                </div>
-                            </td>
-                            
-                        </tr>
-                    </tbody>
-                </table>
-                -->
       
+                
+                <div class="row row-lg">
+                    <div class="col-lg-12">
+                      <!-- Example Table section -->
+                      <div class="example-wrap">
+                        <h4 class="example-title">Faturamento</h4>
+                        <div class="example">
+                          <table class="table table-hover" ng-controller="myCtrl">
+                            <thead>
+                                <tr>
+                                    <th>Unidade</th>
+                                    <th>Status</th>
+                                    <th>TME</th>
+                                    <th><span class="glyphicon glyphicon-plus-sign"></span></th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="unidade in unidades">
+                                <tr>
+                                    <td>{{unidade.label}}</td>
+                                    <td><div ng-class="{ 'btn btn-success btn-xs': !unidade.status , 'btn btn-danger btn-xs': unidade.status  }">{{unidade.status ? "C" : "N"}}</div></td>
+                                    
+                                    <td><span id="normalline">{{unidade.TME}}</span></td>
+                                    <td><a href="#{{unidade.ID}}" class="chev collapsed clickable" data-toggle="collapse" ></a></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div id="{{unidade.ID}}" class="collapse">
+                                            <div>Total de NFs no dia: {{unidade.total_nfs_dia}}</div>
+                                            <div>Última NF: {{unidade.ultima_nf}}</div>
+                                            <div>Emitida: {{unidade.emissao}}</div>
+                                            <div>Tempo emissão: {{unidade.tempo_emissao}}</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- End Example Table-section -->
+                    </div>
+                  </div>
+                
+                
+                
+                
+                
           <div class="row row-lg">
             <div class="col-lg-12">
               <!-- Example Table section -->
@@ -195,7 +215,7 @@
                         <tr>
                             <td>F. Nova Rio</td>
                             <td><a class="btn btn-danger btn-xs">C</a></td>
-                            <td><span id="compositebar">1,2,3,2,2,1,3,1,3,2,1,2,3,2,3,2,1,3,2,1,3,2,1,3</span></td>
+                            <td><span id="compositebar">1,2,3,2,2,1,3,1,3</span></td>
                             <td><a href="#accordion5" class="chev collapsed clickable" data-toggle="collapse" ></a></td>
                         </tr>
                         <tr>
@@ -213,7 +233,7 @@
                         <tr>
                             <td>F. Nova Rio</td>
                             <td><a class="btn btn-success btn-xs">N</a></td>
-                            <td><span class="inlinebar">1,2,3,2,2,1,3,1,3,2,1,2,5,2,3,5,1,3,2,1,3,2,1,3</span></td>
+                            <td><span class="inlinebar">1,3,4,5,3,5</span></td>
                             <td><a href="#accordion6" class="chev collapsed clickable" data-toggle="collapse" ></a></td>
                         </tr>
                         <tr>
